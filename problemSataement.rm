@@ -1,0 +1,19 @@
+1.	Create a script (whatever scripting language is preferred) to scrape logs for given events. The events will be provided in a text/json file. The events format would look like :
+•	[timestamp] [log_level] [thread] This is a data event showing [ID]
+•	[timestamp] [log_level] [thread] This is an error event for client [$CLIENT ID] 
+Where [] mark the fields in the log, the value for which is to be collected and sent to ELK stack , a data event needs to go to an index named “data” and an error event needs to go to an index “error”
+[$] marks protected fields for which the value is to be masked before sending to the ELK stack. 
+You are free to change the format to suit your script, though make sure to clearly state the assumptions made and things supported as part of your scraper.
+
+Definition of Done:
+•	The script with a proper readme file. 
+•	If a hosted ELK could be used to show the data then good, else only printing a valid payload for ELK in a text file or a json dump for ELK would suffice. 
+
+2.	Come up with a valid trigger for the script. 
+
+Definition of Done:
+	The detailed description behind choosing the trigger which should include the following:
+1.	Implementation feasibility
+2.	Performance considerations 
+3.	Maximum Data lag between an event occurrence and reporting 
+
