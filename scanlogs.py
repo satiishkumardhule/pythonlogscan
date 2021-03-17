@@ -8,7 +8,7 @@ fh = logging.FileHandler('logscan_application.log')
 fh.setLevel(logging.DEBUG)
 # create console handler with a higher log level
 ch = logging.StreamHandler()
-ch.setLevel(logging.ERROR)
+ch.setLevel(logging.DEBUG)
 # create formatter and add it to the handlers
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 fh.setFormatter(formatter)
@@ -27,7 +27,7 @@ def process_file(name):
             line = current.readline()
             if not line:
                 break
-            print(line,end="")
+            print(f"file :{name} : {line}")
         try:
             
             if os.stat(name).st_ino != curino:
@@ -45,7 +45,7 @@ def process_file(name):
 
 from multiprocessing import Pool
 from os import listdir 
-p = Pool(10)
+p = Pool(100)
 print()
 logger.debug(listdir(inputDir))
 # process_file(inputDir+r'/a')
