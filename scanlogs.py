@@ -1,6 +1,10 @@
 import os, sys, time
 import logging
-
+'''
+scanlogs is devided into two parts
+ 1. core part is the process file function, which is multithreaded and can read upto 100 files in parallel
+ 2. we are calling process file fuction from outside, to start processing all the log files in configured directory 
+'''
 logger = logging.getLogger('logscan_application')
 logger.setLevel(logging.INFO)
 # create file handler which logs even debug messages
@@ -20,6 +24,13 @@ logger.addHandler(ch)
 inputDir=r"/home/satishkumardhule/logScan/logs"
 
 def process_file(name):
+    '''
+This function processes the log files
+    - reads all the logs files while bootstraping and generates the payload for ELK
+    - when log file gets updated, only updated part is being read by the function
+    - in case of log file rotation, new file gets processed from the begining
+    - Error handling is added in case, log file goes missing or moved
+    '''
     current = open(name, "r")
     curino = os.fstat(current.fileno()).st_ino
     while True:
