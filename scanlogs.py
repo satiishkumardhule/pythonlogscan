@@ -1,5 +1,8 @@
 import os, sys, time
 import logging
+from multiprocessing import Pool
+from os import listdir 
+from glob import glob
 '''
 scanlogs is devided into two parts
  1. core part is the process file function, which is multithreaded and can read upto 100 files in parallel
@@ -21,9 +24,9 @@ ch.setFormatter(formatter)
 logger.addHandler(fh)
 logger.addHandler(ch)
 
-inputDir=r"/home/satishkumardhule/logScan/logs"
+logDir=r"/home/satishkumardhule/logScan/logs"
 
-def process_file(name):
+def process_file(logName):
     '''
 This function processes the log files
     - reads all the logs files while bootstraping and generates the payload for ELK
@@ -31,33 +34,32 @@ This function processes the log files
     - in case of log file rotation, new file gets processed from the begining
     - Error handling is added in case, log file goes missing or moved
     '''
-    current = open(name, "r")
+    current = open(logName, "r")
     curino = os.fstat(current.fileno()).st_ino
     while True:
         while True:
             line = current.readline()
             if not line:
                 break
-            print(f"file :{name} : {line}")
+            print(f"file :{logName} : {line}")
         try:
             
-            if os.stat(name).st_ino != curino:
-                new = open(name, "r")
+            if os.stat(logName).st_ino != curino:
+                new = open(logName, "r")
                 current.close()
                 current = new
                 curino = os.fstat(current.fileno()).st_ino
-                logger.warning(f"{name} file has changed")
+                logger.warning(f"{logName} log file has been rotated")
                 continue
         except IOError:
-            logger.fatal(f"{name} IO Exception")
+            logger.fatal(f"{logName} IO Exception")
             pass
         time.sleep(1)
 
 
-from multiprocessing import Pool
-from os import listdir 
+
 p = Pool(100)
 print()
-logger.debug(listdir(inputDir))
-# process_file(inputDir+r'/a')
-p.map(process_file, [os.path.join(inputDir,i) for i in listdir(inputDir)])
+logger.debug(listdir(logDir))
+# process_file(logDir+r'/a')
+p.map(process_file, glob(os.path.join(logDir,"*.log")))
