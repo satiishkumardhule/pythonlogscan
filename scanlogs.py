@@ -15,7 +15,7 @@ fh = logging.FileHandler('logscan_application.log')
 fh.setLevel(logging.DEBUG)
 # create console handler with a higher log level
 ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
+ch.setLevel(logging.FATAL)
 # create formatter and add it to the handlers
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 fh.setFormatter(formatter)
@@ -34,6 +34,12 @@ This function processes the log files
     - in case of log file rotation, new file gets processed from the begining
     - Error handling is added in case, log file goes missing or moved
     '''
+    import re
+    error_pat = re.compile(
+        r"\[(?P<timestamp>.*)\] \[(?P<log_level>(\w+))\] \[(?P<thread>.*)\] This is an error event for client \[(?P<client_id>.*)\]")
+    data_pat = re.compile(
+        r"\[(?P<timestamp>.*)\] \[(?P<log_level>(\w+))\] \[(?P<thread>.*)\] This is a data event showing \[(?P<id>.*)\]")
+
     current = open(logName, "r")
     curino = os.fstat(current.fileno()).st_ino
     while True:
@@ -41,7 +47,24 @@ This function processes the log files
             line = current.readline()
             if not line:
                 break
-            print(f"file :{logName} : {line}")
+            logger.debug(f"file :{logName} : {line}")
+            match=data_pat.match(line)
+
+            if match:
+                logger.debug(f"In match for {line}")
+                timestamp=match.group("timestamp")
+                log_level=match.group("log_level")
+                thread=match.group("thread")
+                id=match.group("id")
+                print(f"POST on DATA index '{{timestamp':{timestamp}, 'log_level':{log_level}, 'thread': {thread}, 'id':{id}}}")
+            else:
+                match = error_pat.match(line)
+                if match:
+                    timestamp=match.group("timestamp")
+                    log_level=match.group("log_level")
+                    thread=match.group("thread")
+                    client_id=match.group("client_id")
+                    print(f"POST on ERROR index {{'timestamp':{timestamp}, 'log_level':{log_level}, 'thread': {thread}, 'client_id':{client_id}}}")
         try:
             
             if os.stat(logName).st_ino != curino:
