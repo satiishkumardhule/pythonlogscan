@@ -1,8 +1,9 @@
 import os, sys, time
 import logging
 from multiprocessing import Pool
-from os import listdir 
+from os import listdir
 from glob import glob
+
 '''
 scanlogs is devided into two parts
  1. core part is the process file function, which is multithreaded and can read upto 100 files in parallel
@@ -24,7 +25,8 @@ ch.setFormatter(formatter)
 logger.addHandler(fh)
 logger.addHandler(ch)
 
-logDir=r"C:\Users\satis\PycharmProjects\pythonlogscan\logs"
+logDir = r"C:\Users\satis\PycharmProjects\pythonlogscan\logs"
+
 
 def process_file(logName):
     '''
@@ -48,25 +50,28 @@ This function processes the log files
             if not line:
                 break
             logger.debug(f"file :{logName} : {line}")
-            match=data_pat.match(line)
+            match = data_pat.match(line)
 
             if match:
                 logger.debug(f"In match for {line}")
-                timestamp=match.group("timestamp")
-                log_level=match.group("log_level")
-                thread=match.group("thread")
-                id=match.group("id")
-                print(f"POST on DATA index '{{timestamp':{timestamp}, 'log_level':{log_level}, 'thread': {thread}, 'id':{id}}}")
+                timestamp = match.group("timestamp")
+                log_level = match.group("log_level")
+                thread = match.group("thread")
+                id = match.group("id")
+                print(
+                    f"POST on DATA index '{{timestamp':{timestamp}, 'log_level':{log_level}, 'thread': {thread}, 'id':{id}}}")
             else:
                 match = error_pat.match(line)
                 if match:
-                    timestamp=match.group("timestamp")
-                    log_level=match.group("log_level")
-                    thread=match.group("thread")
-                    client_id=match.group("client_id")
-                    print(f"POST on ERROR index {{'timestamp':{timestamp}, 'log_level':{log_level}, 'thread': {thread}, 'client_id':{client_id}}}")
+                    timestamp = match.group("timestamp")
+                    log_level = match.group("log_level")
+                    thread = match.group("thread")
+                    client_id = match.group("client_id")
+                    client_id = '-masked-client-id-'
+                    print(
+                        f"POST on ERROR index {{'timestamp':{timestamp}, 'log_level':{log_level}, 'thread': {thread}, 'client_id':{client_id}}}")
         try:
-            
+
             if os.stat(logName).st_ino != curino:
                 new = open(logName, "r")
                 current.close()
@@ -79,9 +84,9 @@ This function processes the log files
             pass
         time.sleep(1)
 
+
 if __name__ == '__main__':
-    p = Pool(3)
-    print()
+    p = Pool(20)
     logger.debug(listdir(logDir))
     # process_file(logDir+r'/a')
-    p.map(process_file, glob(os.path.join(logDir,"*.log")))
+    p.map(process_file, glob(os.path.join(logDir, "*.log")))
