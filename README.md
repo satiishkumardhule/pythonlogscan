@@ -21,7 +21,7 @@ Definition of Done:
 3.	Maximum Data lag between an event occurrence and reporting 
 
 
-
+______________________________
 **scanlogs.py**
 
 _Features_
@@ -36,8 +36,9 @@ _How to Use_
 - program does not dependent on any special libraries , default modules like datetime, time, glob, os , sys are used
 - program can be run by passing file to python interpreter 
 
-python scanlogs.py 
+<code>python scanlogs.py </code>
 
+______________________________
 **dummyLogGenerator**
 
 _Features_
@@ -49,4 +50,4 @@ _How to Use_
 - program does not dependent on any special libraries , default modules like datetime, time, glob, os , sys are used
 - program can be run by passing file to python interpreter 
 
-python dummyLogGenerator.py 
+<code>python dummyLogGenerator.py </code>
