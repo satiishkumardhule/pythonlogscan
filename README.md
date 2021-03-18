@@ -51,3 +51,9 @@ _How to Use_
 - program can be run by passing file to python interpreter 
 
 <code>python dummyLogGenerator.py </code>
+
+
+________________________________
+Implementation feasibility --> Considered 
+Performance considerations --> Considered
+Maximum Data lag between an event occurrence and reporting --> around one second
