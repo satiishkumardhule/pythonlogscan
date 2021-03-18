@@ -22,9 +22,9 @@ Definition of Done:
 
 
 
-**#scanlogs.py **
+**scanlogs.py**
 
-Features
+_Features_
 - This is real time log scanner, which parses and process the logs.
 - When pattern is matched, Payload is generated for ELK
 - When log rotation happens, new log file is read from the begining
@@ -32,20 +32,20 @@ Features
 - Logs are processed almost on real time basis
 - Program itself is using multiprocessing to handle all the files in given folder paralely
 
-How to Use
+_How to Use_
 - program does not dependent on any special libraries , default modules like datetime, time, glob, os , sys are used
 - program can be run by passing file to python interpreter 
 
 python scanlogs.py 
 
-**#dummyLogGenerator**
+**dummyLogGenerator**
 
-Features
+_Features_
 - This program generates random logs and appends to all the log files in given folder
 - Log rotation has also been implemented to simulate real world situation
 - Program is using multiprocessing to update all the logs in parallel
 
-How to Use
+_How to Use_
 - program does not dependent on any special libraries , default modules like datetime, time, glob, os , sys are used
 - program can be run by passing file to python interpreter 
 
