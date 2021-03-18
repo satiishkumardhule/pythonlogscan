@@ -1,6 +1,6 @@
 # pythonlogscan
 
-Problem Statement
+**Problem Statement**
 1.	Create a script (whatever scripting language is preferred) to scrape logs for given events. The events will be provided in a text/json file. The events format would look like :
 •	[timestamp] [log_level] [thread] This is a data event showing [ID]
 •	[timestamp] [log_level] [thread] This is an error event for client [$CLIENT ID] 
