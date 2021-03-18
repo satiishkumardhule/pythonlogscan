@@ -54,6 +54,6 @@ _How to Use_
 
 
 ________________________________
-Implementation feasibility --> Considered 
-Performance considerations --> Considered
-Maximum Data lag between an event occurrence and reporting --> around one second
+- Implementation feasibility --> Considered 
+- Performance considerations --> Considered
+- Maximum Data lag between an event occurrence and reporting --> around one second
