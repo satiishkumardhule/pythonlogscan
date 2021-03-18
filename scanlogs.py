@@ -24,7 +24,7 @@ ch.setFormatter(formatter)
 logger.addHandler(fh)
 logger.addHandler(ch)
 
-logDir=r"/home/satishkumardhule/logScan/logs"
+logDir=r"C:\Users\satis\PycharmProjects\pythonlogscan\logs"
 
 def process_file(logName):
     '''
@@ -56,10 +56,9 @@ This function processes the log files
             pass
         time.sleep(1)
 
-
-
-p = Pool(100)
-print()
-logger.debug(listdir(logDir))
-# process_file(logDir+r'/a')
-p.map(process_file, glob(os.path.join(logDir,"*.log")))
+if __name__ == '__main__':
+    p = Pool(3)
+    print()
+    logger.debug(listdir(logDir))
+    # process_file(logDir+r'/a')
+    p.map(process_file, glob(os.path.join(logDir,"*.log")))
