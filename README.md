@@ -39,7 +39,7 @@ _How to Use_
 <code>python scanlogs.py </code>
 
 ______________________________
-**dummyLogGenerator**
+**dummyLogGenerator.py**
 
 _Features_
 - This program generates random logs and appends to all the log files in given folder
