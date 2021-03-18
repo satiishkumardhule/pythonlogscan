@@ -22,7 +22,8 @@ Definition of Done:
 
 
 
-#scanlogs.py 
+**#scanlogs.py **
+
 Features
 - This is real time log scanner, which parses and process the logs.
 - When pattern is matched, Payload is generated for ELK
@@ -37,7 +38,8 @@ How to Use
 
 python scanlogs.py 
 
-#dummyLogGenerator
+**#dummyLogGenerator**
+
 Features
 - This program generates random logs and appends to all the log files in given folder
 - Log rotation has also been implemented to simulate real world situation
